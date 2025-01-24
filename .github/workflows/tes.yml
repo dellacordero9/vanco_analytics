@@ -11,13 +11,6 @@ jobs:
          os: [macos-latest]
     timeout-minutes: 360
     continue-on-error: true # Don't let macos test fail whole workflow
-    env:
-      ISO_PATH: ~/.docker/machine/cache/boot2docker.iso
     steps:
-      - uses: docker-practice/actions-setup-docker@master
-      - run: |              
-              docker version
-              docker info 
-              docker ps 
-              docker run hello-world
-        shell: bash
+      - uses: docker-practice/actions-setup-docker@master    
+      - run: docker info
