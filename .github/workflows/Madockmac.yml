@@ -20,7 +20,7 @@ jobs:
               bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
               brew --version     
               # for the docker cli
-              brew install docker
+              brew install docker colima
               # installed by default
               colima start
               docker version
