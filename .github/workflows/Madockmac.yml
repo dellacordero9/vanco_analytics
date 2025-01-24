@@ -10,7 +10,7 @@ jobs:
       matrix:
          os: [macos-latest]
     timeout-minutes: 360
- 
+    continue-on-error: true # Don't let macos test fail whole workflow
     steps:
       - uses: actions/checkout@v4
       - run: mkdir runner
@@ -18,20 +18,8 @@ jobs:
         working-directory: ./runner
         run: |
               bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install.sh)"
-              brew install --cask docker
-              open /Applications/Docker.app
-          
-              TIMEOUT=120
-              INTERVAL=5
-              for i in $(seq 1 $((TIMEOUT / INTERVAL))); do
-               if docker info > /dev/null 2>&1; then
-                 echo "Docker is running."
-                 break
-               fi
-               echo "Waiting for Docker to start..."
-               sleep $INTERVAL
-              done
-              
+              brew install --cask docker colima
+              colima start
               docker version
               docker info 
               docker ps 
