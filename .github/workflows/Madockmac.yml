@@ -18,7 +18,7 @@ jobs:
         working-directory: ./runner
         run: |
               bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install.sh)"
-              brew cask install docker
+              brew --cask install docker
               docker version
               docker info 
               docker ps 
