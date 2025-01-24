@@ -19,6 +19,7 @@ jobs:
         run: |
               bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install.sh)"
               brew install --cask docker colima
+              brew install colima
               colima start
               docker version
               docker info 
