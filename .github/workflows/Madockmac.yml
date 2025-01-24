@@ -18,6 +18,6 @@ jobs:
         working-directory: ./runner
         run: |
               brew install docker
-              colima start
+              # colima start
               docker run hello-world
         shell: bash
