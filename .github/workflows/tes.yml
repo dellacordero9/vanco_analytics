@@ -36,7 +36,7 @@ jobs:
           mkdir -p ~/.docker/machine/cache/
           test -f ${{ env.ISO_PATH }} && printf " 🛠️ ${{ env.ISO_PATH }} successfully restored 🛠️ \n\n" || wget "https://github.com/boot2docker/boot2docker/releases/download/v19.03.12/boot2docker.iso" -O ${{ env.ISO_PATH }}
           printf " 🛠️ Installing Docker from Homebrew 🛠️ \n\n"
-          brew install --cask docker docker-machine virtualbox
+          brew install docker docker-machine virtualbox
           printf " 🛠️ Creating Docker VM 🛠️ \n\n"
           docker-machine create --driver virtualbox --virtualbox-boot2docker-url ${{ env.ISO_PATH }} default
           docker-machine env default
