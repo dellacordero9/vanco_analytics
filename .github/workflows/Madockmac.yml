@@ -17,7 +17,7 @@ jobs:
       - name: Setup App
         working-directory: ./runner
         run: |
-              brew install docker
-              # colima start
+              brew install docker colima
+              colima start
               docker run hello-world
         shell: bash
