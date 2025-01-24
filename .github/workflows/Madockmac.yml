@@ -17,12 +17,8 @@ jobs:
       - name: Setup App
         working-directory: ./runner
         run: |
-              bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
-              brew --version     
-              # for the docker cli
-              brew install docker colima
-              # installed by default
-              colima start
+              bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install.sh)"
+              brew cask install docker
               docker version
               docker info 
               docker ps 
