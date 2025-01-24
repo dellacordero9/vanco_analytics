@@ -12,17 +12,15 @@ jobs:
     timeout-minutes: 360
     continue-on-error: true # Don't let macos test fail whole workflow
     steps:
-      - uses: actions/checkout@v4
-      - run: mkdir runner
-      - name: Setup App
-        working-directory: ./runner
+      - name: Install docker
         run: |
-              bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install.sh)"
-              brew install --cask docker colima
-              brew install colima
-              colima start
-              docker version
-              docker info 
-              docker ps 
-              docker run hello-world
-        shell: bash
+         mkdir -p ~/.docker/machine/cache
+         curl -Lo ~/.docker/machine/cache/boot2docker.iso https://github.com/boot2docker/boot2docker/releases/download/v19.03.12/boot2docker.iso
+         brew install docker docker-machine
+         docker-machine create --driver virtualbox default
+         docker-machine env default
+      - name: Run container
+        run: |
+         eval "$(docker-machine env default)" 
+         docker pull minio/minio
+         docker container run --rm minio/minio minio --help
