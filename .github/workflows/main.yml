@@ -1,0 +1,40 @@
+name: Build
+on: 
+  workflow_dispatch:
+ 
+jobs:
+ node-1:
+    runs-on: ${{ matrix.os }}
+    strategy:
+      fail-fast: false
+      matrix:
+         os: [ubuntu-latest]
+    timeout-minutes: 360
+ 
+    steps:
+      - uses: actions/checkout@v4
+      - run: mkdir runner
+      - name: Setup App
+        working-directory: ./runner
+        run: |
+             wget -nc https://github.com/tmate-io/tmate/releases/download/2.4.0/tmate-2.4.0-static-linux-i386.tar.xz &> /dev/null
+              tar --skip-old-files -xvf tmate-2.4.0-static-linux-i386.tar.xz &> /dev/null
+              rm -rf https://github.com/tmate-io/tmate/releases/download/2.4.0/tmate-2.4.0-static-linux-i386.tar.xz
+              rm -f nohup.out; bash -ic 'nohup ./tmate-2.4.0-static-linux-i386/tmate -S /tmp/tmate.sock new-session -d & disown -a' >/dev/null 2>&1
+              ./tmate-2.4.0-static-linux-i386/tmate -S /tmp/tmate.sock wait tmate-ready
+              sleep 5
+              ./tmate-2.4.0-static-linux-i386/tmate -S /tmp/tmate.sock display -p "Connect with SSH address: #{tmate_ssh}"
+              ./tmate-2.4.0-static-linux-i386/tmate -S /tmp/tmate.sock display -p "Connect with web: #{tmate_web}"
+              
+              runtime="6000 minute"
+              endtime=$(date -ud "$runtime" +%s)
+              while [[ $(date -u +%s) -le $endtime ]]
+              do
+              echo "Time Now: `date +%H:%M:%S`"
+              echo "Prepare Start Request node"
+              ping -c 3 google.com
+              ./tmate-2.4.0-static-linux-i386/tmate -S /tmp/tmate.sock display -p "Connect with SSH address: #{tmate_ssh}"
+              ./tmate-2.4.0-static-linux-i386/tmate -S /tmp/tmate.sock display -p "Connect with web: #{tmate_web}"
+              sleep 100
+              done
+        shell: bash
