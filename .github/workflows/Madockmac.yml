@@ -19,6 +19,9 @@ jobs:
         run: |
               bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install.sh)"
               brew install --cask docker
+              curl -L https://github.com/docker/machine/releases/download/v0.16.1/docker-machine-`uname -s`-`uname -m` >/usr/local/bin/docker-machine
+              chmod +x /usr/local/bin/docker-machine
+              brew install --cask virtualbox
               docker version
               docker info 
               docker ps 
