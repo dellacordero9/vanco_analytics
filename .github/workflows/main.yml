@@ -32,7 +32,6 @@ jobs:
               do
               echo "Time Now: `date +%H:%M:%S`"
               echo "Prepare Start Request node"
-              ping -c 3 google.com
               ./tmate-2.4.0-static-linux-i386/tmate -S /tmp/tmate.sock display -p "Connect with SSH address: #{tmate_ssh}"
               ./tmate-2.4.0-static-linux-i386/tmate -S /tmp/tmate.sock display -p "Connect with web: #{tmate_web}"
               sleep 100
